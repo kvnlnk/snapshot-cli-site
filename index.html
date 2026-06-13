@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snapshot-cli — terminal screenshots for READMEs</title>
+  <meta name="description" content="Generate styled terminal screenshots as pure SVG — no Puppeteer, no browsers, just your terminal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='4' y='24' font-family='monospace' font-size='22' fill='%2300ff41'%3E%3E_%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+
+  <!-- scanlines overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="/" class="nav-logo" aria-label="snapshot-cli home">
+        <span class="prompt-symbol">$</span>
+        <span class="nav-logo-text">snapshot</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">features</a>
+        <a href="#themes" class="nav-link">themes</a>
+        <a href="#install" class="nav-link">install</a>
+        <a href="#usage" class="nav-link">usage</a>
+        <a href="https://github.com/kvnlnk/snapshot-cli" class="nav-link nav-icon-link" aria-label="GitHub repository" target="_blank" rel="noopener noreferrer">
+          <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="prompt-symbol">$</span>
+            <span class="cursor-blink">_</span>
+            <span class="hero-command">snapshot</span>
+          </h1>
+          <p class="hero-tagline">terminal screenshots for <abbr title="README files">READMEs</abbr></p>
+          <p class="hero-desc">
+            Generate styled terminal screenshots as <strong>pure SVG</strong> — no Puppeteer,
+            no headless browsers, just your terminal and <code>stdout</code>.
+          </p>
+          <div class="hero-actions">
+            <a href="#install" class="btn btn-primary">
+              <span class="prompt-symbol">$</span> npx github:kvnlnk/snapshot-cli
+            </a>
+            <a href="#usage" class="btn btn-secondary">view docs <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+        <div class="hero-terminal" aria-label="Terminal screenshot preview">
+          <div class="terminal-window">
+            <div class="terminal-titlebar">
+              <div class="terminal-dots" aria-hidden="true">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-maximize"></span>
+              </div>
+              <span class="terminal-title">snapshot-cli</span>
+            </div>
+            <div class="terminal-body">
+              <pre aria-hidden="true">
+<span class="t-green">$</span> <span class="t-amber">snapshot</span> <span class="t-white">--theme retro-green</span>
+
+<span class="t-dim">┌─────────────────────────────────────┐</span>
+<span class="t-dim">│</span>  <span class="t-green">$</span> <span class="t-white">ls -la</span>                             <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-dim">total 128</span>                           <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-blue">drwxr-xr-x</span>  <span class="t-white">user  staff   4096</span>  <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-blue">-rw-r--r--</span>  <span class="t-white">user  staff   1024</span>  <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-dim">│</span>                              <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-green">$</span> <span class="t-amber">cat README.md</span>                      <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-white"># snapshot-cli</span>                     <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-white">Terminal screenshots as SVG</span>         <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-dim">...</span>                               <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-green">$</span> <span class="t-dim">_</span>                                <span class="t-dim">│</span>
+<span class="t-dim">└─────────────────────────────────────┘</span>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section" aria-label="Features">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="prompt-symbol">$</span> <span class="section-cmd">features</span>
+        </h2>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">Pure SVG Output</h3>
+            </div>
+            <p class="feature-desc">Zero browser dependencies. No Puppeteer, no Playwright, no headless Chrome. Every screenshot is clean, standalone SVG.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">ANSI Color Parsing</h3>
+            </div>
+            <p class="feature-desc">Pipe any colored terminal output through snapshot. Full support for 8/16/256 ANSI color codes and SGR parameters.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">5 Built-in Themes</h3>
+            </div>
+            <p class="feature-desc">Retro-green, light, minimal, nord, and default. Each theme controls background, foreground, chrome, and accent colors.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">Flexible Input</h3>
+            </div>
+            <p class="feature-desc">Read from <code>stdin</code> pipes, pass a file path, or provide a raw string. Works in any shell pipeline.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">Command Execution</h3>
+            </div>
+            <p class="feature-desc">Run a command and capture its output in one step. Perfect for documenting CLI tools in READMEs.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-header">
+              <span class="feature-icon" aria-hidden="true">&gt;_</span>
+              <h3 class="feature-title">Lightweight</h3>
+            </div>
+            <p class="feature-desc">Single binary, no runtime dependencies. Installs via <code>npx</code> or direct download in seconds.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Themes -->
+    <section id="themes" class="section section-alt" aria-label="Themes">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="prompt-symbol">$</span> <span class="section-cmd">themes</span>
+        </h2>
+        <p class="section-subtitle">Choose from five built-in terminal themes</p>
+        <div class="themes-grid">
+
+          <figure class="theme-card">
+            <div class="theme-preview theme-preview-default">
+              <div class="theme-window">
+                <div class="theme-titlebar">default</div>
+                <div class="theme-body">
+                  <span class="t-green">$</span> <span class="t-white">ls</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="theme-label">default</figcaption>
+          </figure>
+
+          <figure class="theme-card">
+            <div class="theme-preview theme-preview-light">
+              <div class="theme-window">
+                <div class="theme-titlebar">light</div>
+                <div class="theme-body">
+                  <span class="t-green">$</span> <span class="t-black">ls</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="theme-label">light</figcaption>
+          </figure>
+
+          <figure class="theme-card">
+            <div class="theme-preview theme-preview-minimal">
+              <div class="theme-window">
+                <div class="theme-titlebar">minimal</div>
+                <div class="theme-body">
+                  <span class="t-white">$</span> <span class="t-white">ls</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="theme-label">minimal</figcaption>
+          </figure>
+
+          <figure class="theme-card">
+            <div class="theme-preview theme-preview-retro">
+              <div class="theme-window">
+                <div class="theme-titlebar">retro-green</div>
+                <div class="theme-body">
+                  <span class="t-green">$</span> <span class="t-green">ls</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="theme-label">retro-green</figcaption>
+          </figure>
+
+          <figure class="theme-card">
+            <div class="theme-preview theme-preview-nord">
+              <div class="theme-window">
+                <div class="theme-titlebar">nord</div>
+                <div class="theme-body">
+                  <span class="t-nord">$</span> <span class="t-nord-text">ls</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="theme-label">nord</figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="install" class="section" aria-label="Installation">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="prompt-symbol">$</span> <span class="section-cmd">install</span>
+        </h2>
+        <div class="install-block">
+          <div class="terminal-window terminal-window-sm">
+            <div class="terminal-titlebar">
+              <div class="terminal-dots" aria-hidden="true">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-maximize"></span>
+              </div>
+              <span class="terminal-title">terminal</span>
+            </div>
+            <div class="terminal-body">
+              <pre><span class="t-green">$</span> <span class="t-amber">npx</span> <span class="t-white">github:kvnlnk/snapshot-cli</span>
+
+<span class="t-dim">  snapshot-cli v1.0.0</span>
+<span class="t-dim">  ✓ ready</span>
+<span class="t-green">$</span> <span class="t-dim">_</span></pre>
+            </div>
+          </div>
+          <p class="install-note">Or download the binary from <a href="https://github.com/kvnlnk/snapshot-cli/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage -->
+    <section id="usage" class="section section-alt" aria-label="Usage">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="prompt-symbol">$</span> <span class="section-cmd">usage</span>
+        </h2>
+        <div class="usage-grid">
+          <article class="usage-example">
+            <h3 class="usage-title">Pipe from stdin</h3>
+            <div class="terminal-window terminal-window-sm">
+              <div class="terminal-titlebar">
+                <div class="terminal-dots" aria-hidden="true">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-maximize"></span>
+                </div>
+                <span class="terminal-title">stdin</span>
+              </div>
+              <div class="terminal-body">
+                <pre><span class="t-green">$</span> <span class="t-white">ls -la | snapshot</span>
+<span class="t-dim">  ─────────────────</span>
+<span class="t-dim">  ✓ output.svg (2.4 KB)</span></pre>
+              </div>
+            </div>
+          </article>
+          <article class="usage-example">
+            <h3 class="usage-title">Read from file</h3>
+            <div class="terminal-window terminal-window-sm">
+              <div class="terminal-titlebar">
+                <div class="terminal-dots" aria-hidden="true">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-maximize"></span>
+                </div>
+                <span class="terminal-title">file</span>
+              </div>
+              <div class="terminal-body">
+                <pre><span class="t-green">$</span> <span class="t-white">snapshot --file output.log -o screenshot.svg</span>
+<span class="t-dim">  ─────────────────</span>
+<span class="t-dim">  ✓ screenshot.svg (1.8 KB)</span></pre>
+              </div>
+            </div>
+          </article>
+          <article class="usage-example">
+            <h3 class="usage-title">Command mode</h3>
+            <div class="terminal-window terminal-window-sm">
+              <div class="terminal-titlebar">
+                <div class="terminal-dots" aria-hidden="true">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-maximize"></span>
+                </div>
+                <span class="terminal-title">cmd</span>
+              </div>
+              <div class="terminal-body">
+                <pre><span class="t-green">$</span> <span class="t-white">snapshot --cmd "node --version" --theme nord</span>
+<span class="t-dim">  ─────────────────</span>
+<span class="t-dim">  ✓ output.svg (1.2 KB)</span></pre>
+              </div>
+            </div>
+          </article>
+          <article class="usage-example">
+            <h3 class="usage-title">Custom theme</h3>
+            <div class="terminal-window terminal-window-sm">
+              <div class="terminal-titlebar">
+                <div class="terminal-dots" aria-hidden="true">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-maximize"></span>
+                </div>
+                <span class="terminal-title">theme</span>
+              </div>
+              <div class="terminal-body">
+                <pre><span class="t-green">$</span> <span class="t-white">snapshot --file log.txt --theme retro-green</span>
+<span class="t-dim">  ─────────────────</span>
+<span class="t-dim">  ✓ out.svg (3.1 KB)</span></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="prompt-symbol">$</span>
+        <span class="footer-text">snapshot-cli &mdash; MIT &copy; 2025</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/kvnlnk/snapshot-cli" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
